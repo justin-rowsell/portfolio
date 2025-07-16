@@ -21,6 +21,9 @@
           <!-- <NavLink link={'/contact'} iconCode={'chat'} linkText={'Contact Me'} hoverColor={hoverColor}/> -->
           <!-- <NavLink link={'https://github.com/justin-rowsell'} iconCode={'code'} linkText={'Github'} hoverColor={hoverColor}/> -->
           <NavLink link={'https://substack.com/@justinrowsell'} iconCode={'book'} linkText={'Blog'} hoverColor={hoverColor} />
+          <NavLink link={'/photography'} iconCode={'photo_library'} linkText={'Photo Gallery'} hoverColor={hoverColor} />
+          <NavLink link={'/landscape-design'} iconCode={'landscape'} linkText={'Landscape Design'} hoverColor={hoverColor} />
         </div>
     </div>
+    
 </nav>

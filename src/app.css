@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 a {
-    @apply underline text-red-700 hover:text-orange-600 visited:text-red-700
- }
+    @apply text-red-700 hover:text-orange-600 visited:text-red-700;
+    text-decoration: none;
+}
