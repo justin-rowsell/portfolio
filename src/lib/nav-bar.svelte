@@ -18,9 +18,9 @@
     </div> -->
     <div class="flex flex-grow sm:items-center sm:justify-start items-end justify-end">
         <div class="text-sm md:flex-grow flex-col">
-          <NavLink link={'/contact'} iconCode={'chat'} linkText={'Contact Me'} hoverColor={hoverColor}/>
-          <NavLink link={'https://github.com/justin-rowsell'} iconCode={'code'} linkText={'Github'} hoverColor={hoverColor}/>
-          <NavLink link={'/blog'} iconCode={'book'} linkText={'Blog'} hoverColor={hoverColor} />
+          <!-- <NavLink link={'/contact'} iconCode={'chat'} linkText={'Contact Me'} hoverColor={hoverColor}/> -->
+          <!-- <NavLink link={'https://github.com/justin-rowsell'} iconCode={'code'} linkText={'Github'} hoverColor={hoverColor}/> -->
+          <NavLink link={'https://substack.com/@justinrowsell'} iconCode={'book'} linkText={'Blog'} hoverColor={hoverColor} />
         </div>
     </div>
 </nav>
