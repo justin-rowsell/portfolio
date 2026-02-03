@@ -2,6 +2,9 @@
 	"name": "portfolio",
 	"version": "0.0.1",
 	"private": true,
+	"engines": {
+		"node": "24.x"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -37,7 +40,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-vercel": "^3.0.3",
+		"@sveltejs/adapter-vercel": "^5.2.0",
 		"@types/three": "^0.149.0",
 		"marked": "^4.3.0",
 		"three": "^0.150.1"
