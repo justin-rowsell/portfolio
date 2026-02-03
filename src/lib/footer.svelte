@@ -15,7 +15,7 @@
 		</p>
 	</div>
 	<div class="flex flex-col w-full">
-		<span class="footer-title text-xl text-blogAccent">{footerTitle}</span>
+		<span class="footer-title text-xl text-accent">{footerTitle}</span>
 		<div class="flex flex-row">
 			<slot />
 		</div>
