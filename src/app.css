@@ -2,7 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-    @apply text-red-700 hover:text-orange-600 visited:text-red-700;
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: theme(colors.paper);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: theme(fontFamily.sans);
+    color: theme(colors.ink);
+    background-color: theme(colors.paper);
+  }
+
+  a {
+    color: theme(colors.darkAccent);
     text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: theme(colors.main);
+  }
+
+  ::selection {
+    background: theme(colors.main);
+    color: theme(colors.paper);
+  }
+}
+
+@layer utilities {
+  /* Scroll reveal: elements start hidden, .is-visible reveals them */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
 }

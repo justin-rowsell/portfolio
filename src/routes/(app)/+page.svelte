@@ -1,13 +1,5 @@
-<script>
-	import LandingSection from "../../lib/landing-section.svelte";
-
+<script lang="ts">
+  import LandingSection from '../../lib/landing-section.svelte';
 </script>
-<div class="flex flex-col">
-  <LandingSection></LandingSection>
-</div>
 
-<style lang="postcss">
-  :global(html) {
-    background-color: theme(colors.lightShade);
-  }
-</style>
+<LandingSection />
