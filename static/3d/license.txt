@@ -1,8 +1,0 @@
-Model Information:
-* title:	Cherry Blossoms Branch Rigged Animated
-* source:	https://sketchfab.com/3d-models/cherry-blossoms-branch-rigged-animated-2e72c6ef6e3f43eabd1d9e66973f23b9
-* author:	pinotoon (https://sketchfab.com/pinotoon)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

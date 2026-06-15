@@ -1,24 +1,24 @@
 <script lang="ts">
   import headshot from '$lib/assets/headshot.jpeg';
   import { onMount, onDestroy } from 'svelte';
-  import { Blossom } from './blossom';
+  import { Globe } from './globe';
   import { reveal } from './reveal';
   import Preloader from './preloader.svelte';
 
   let canvasEl: HTMLCanvasElement;
-  let blossom: Blossom | undefined;
+  let globe: Globe | undefined;
   let revealContent = false;
 
   onMount(() => {
-    blossom = new Blossom(canvasEl);
+    globe = new Globe(canvasEl);
   });
 
   onDestroy(() => {
-    blossom?.dispose();
+    globe?.dispose();
   });
 
   function handleReveal() {
-    blossom?.start();
+    globe?.start();
     revealContent = true;
   }
 
