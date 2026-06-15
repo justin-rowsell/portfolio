@@ -17,7 +17,7 @@ import {
 import { GLTFLoader, type GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const MODEL_PATH = '/3d/scene.gltf';
-const TARGET_SIZE = 9.0; // fit the branch to roughly this world size
+const TARGET_SIZE = 6.0; // fit the branch to roughly this world size
 
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
@@ -33,9 +33,6 @@ export class Blossom {
   private bloom?: AnimationAction;
   private el: HTMLCanvasElement;
 
-  private pointer = { x: 0, y: 0 };
-  private targetTilt = { x: 0, y: 0 };
-
   private introStart = 0;
   private introDuration = 1700;
   private started = false;
@@ -44,10 +41,6 @@ export class Blossom {
   private disposed = false;
 
   private onResize = () => this.resize();
-  private onPointer = (e: PointerEvent) => {
-    this.pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-    this.pointer.y = (e.clientY / window.innerHeight) * 2 - 1;
-  };
 
   constructor(el: HTMLCanvasElement) {
     this.el = el;
@@ -55,7 +48,7 @@ export class Blossom {
     this.clock = new Clock();
 
     this.camera = new PerspectiveCamera(42, this.aspect(), 0.1, 100);
-    this.camera.position.set(0, 0.3, 5.4);
+    this.camera.position.set(0, 0.3, 6.5);
     this.camera.lookAt(0, 0, 0);
 
     this.renderer = new WebGLRenderer({ canvas: el, antialias: true, alpha: true });
@@ -80,7 +73,6 @@ export class Blossom {
     );
 
     window.addEventListener('resize', this.onResize);
-    window.addEventListener('pointermove', this.onPointer);
     this.tick();
   }
 
@@ -140,7 +132,6 @@ export class Blossom {
     if (this.disposed) return;
     this.raf = requestAnimationFrame(this.tick);
     const now = performance.now();
-    const t = now * 0.001;
 
     if (this.mixer) this.mixer.update(this.clock.getDelta());
 
@@ -148,15 +139,6 @@ export class Blossom {
     const eased = easeOutCubic(intro);
     const pop = eased + Math.sin(eased * Math.PI) * 0.05;
     this.root.scale.setScalar(Math.max(pop, 0.001));
-
-    // Gentle sway so it feels alive
-    this.root.rotation.z = Math.sin(t * 0.4) * 0.02 * intro;
-
-    // Mouse parallax tilt
-    this.targetTilt.y = this.pointer.x * 0.3;
-    this.targetTilt.x = this.pointer.y * 0.18;
-    this.root.rotation.y += (this.targetTilt.y - this.root.rotation.y) * 0.05;
-    this.root.rotation.x += (this.targetTilt.x - this.root.rotation.x) * 0.05;
 
     this.renderer.render(this.scene, this.camera);
   };
