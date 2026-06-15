@@ -1,18 +1,30 @@
 import createGlobe, { type COBEOptions } from 'cobe';
 
-// Futuristic, on-brand palette (see tailwind.config.cjs)
-const BASE_COLOR: COBEOptions['baseColor'] = [0.95, 0.22, 0.17]; // glowing red landmass dots
-const MARKER_COLOR: COBEOptions['markerColor'] = [1, 0.92, 0.85]; // bright warm-white beacons
-const GLOW_COLOR: COBEOptions['glowColor'] = [1, 0.231, 0.188]; // red atmospheric rim
+// Cartographic, on-brand palette (see tailwind.config.cjs): a warm topographic
+// landmass with bright survey-marker beacons and a soft red atmospheric rim.
+const BASE_COLOR: COBEOptions['baseColor'] = [0.78, 0.4, 0.28]; // warm terracotta landmass dots
+const MARKER_COLOR: COBEOptions['markerColor'] = [1, 0.95, 0.88]; // bright warm-white beacons
+const GLOW_COLOR: COBEOptions['glowColor'] = [0.86, 0.2, 0.16]; // ember-red atmospheric rim
 
 const BASE_THETA = 0.3;
 
-const MARKERS: COBEOptions['markers'] = [
-  { location: [39.7, -105.0], size: 0.06 }, // Colorado
-  { location: [14.5, -90.73], size: 0.06 }, // Guatemala
-  { location: [4.71, -74.07], size: 0.06 }, // Bogotá
-  { location: [37.57, 126.98], size: 0.06 } // Seoul
+// Places Justin has lived & worked — surfaced as a legend beside the globe.
+export interface Place {
+  label: string;
+  coords: string;
+  location: [number, number];
+}
+
+export const PLACES: Place[] = [
+  { label: 'Colorado', coords: '39.7°N 105.0°W', location: [39.7, -105.0] },
+  { label: 'Bogotá', coords: '4.7°N 74.1°W', location: [4.71, -74.07] },
+  { label: 'Seoul', coords: '37.6°N 127.0°E', location: [37.57, 126.98] }
 ];
+
+const MARKERS: COBEOptions['markers'] = PLACES.map((p) => ({
+  location: p.location,
+  size: 0.06
+}));
 
 export class Globe {
   private globe: ReturnType<typeof createGlobe>;

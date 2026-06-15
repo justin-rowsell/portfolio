@@ -47,7 +47,7 @@
       <div class="bar">
         <div class="fill" style="transform: scaleX({count / 100})"></div>
       </div>
-      <p class="hint">Founder · Builder · Systems thinker</p>
+      <p class="hint">Builder · Explorer · Systems thinker</p>
     </div>
   </div>
 {/if}
