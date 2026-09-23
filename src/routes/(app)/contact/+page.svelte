@@ -46,10 +46,10 @@
     import Spinner from "$lib/spinner.svelte";
 	import { goto } from '$app/navigation';
     import { PUBLIC_CONTACT_API } from '$env/static/public';
-    let name: string = '';
-    let email: string = '';
-    let company: string = '';
-    let message: string = '';
+    let name = '';
+    let email = '';
+    let company = '';
+    let message = '';
     let userMessage: string;
     let showDangerMessage = false;
     let disabled = false;
