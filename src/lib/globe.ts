@@ -1,10 +1,14 @@
-import createGlobe, { type COBEOptions } from 'cobe';
+import createGlobe, { type COBEOptions, type Marker } from 'cobe';
 
 // Cartographic, on-brand palette (see tailwind.config.cjs): a warm topographic
 // landmass with bright survey-marker beacons and a soft red atmospheric rim.
 const BASE_COLOR: COBEOptions['baseColor'] = [0.78, 0.4, 0.28]; // warm terracotta landmass dots
 const MARKER_COLOR: COBEOptions['markerColor'] = [1, 0.95, 0.88]; // bright warm-white beacons
 const GLOW_COLOR: COBEOptions['glowColor'] = [0.86, 0.2, 0.16]; // ember-red atmospheric rim
+
+// Secondary marker tint for places that were visited rather than lived in —
+// smaller ember-red pins that read as a layer beneath the main beacons.
+const VISITED_COLOR: [number, number, number] = [1, 0.35, 0.26];
 
 const BASE_THETA = 0.3;
 
@@ -15,16 +19,65 @@ export interface Place {
   location: [number, number];
 }
 
+// Renders [lat, lon] the way a map margin would: '39.7°N 105.0°W'.
+function formatCoords([lat, lon]: [number, number]): string {
+  const ns = `${Math.abs(lat).toFixed(1)}°${lat >= 0 ? 'N' : 'S'}`;
+  const ew = `${Math.abs(lon).toFixed(1)}°${lon >= 0 ? 'E' : 'W'}`;
+  return `${ns} ${ew}`;
+}
+
+function place(label: string, location: [number, number]): Place {
+  return { label, location, coords: formatCoords(location) };
+}
+
+// Lived & worked — a year or more on the ground.
 export const PLACES: Place[] = [
-  { label: 'Colorado', coords: '39.7°N 105.0°W', location: [39.7, -105.0] },
-  { label: 'Bogotá', coords: '4.7°N 74.1°W', location: [4.71, -74.07] },
-  { label: 'Seoul', coords: '37.6°N 127.0°E', location: [37.57, 126.98] }
+  place('Colorado', [39.7, -105.0]),
+  place('Bogotá', [4.71, -74.07]),
+  place('Seoul', [37.57, 126.98])
 ];
 
-const MARKERS: COBEOptions['markers'] = PLACES.map((p) => ({
+// Everywhere else — countries visited, plotted at a representative point.
+export const VISITED: Place[] = [
+  place('Taiwan', [25.03, 121.57]),
+  place('Hong Kong', [22.32, 114.17]),
+  place('Malaysia', [3.14, 101.69]),
+  place('Singapore', [1.35, 103.82]),
+  place('Japan', [35.68, 139.69]),
+  place('Turkey', [41.01, 28.98]),
+  place('Greece', [37.98, 23.73]),
+  place('Croatia', [45.81, 15.98]),
+  place('Italy', [41.9, 12.5]),
+  place('Germany', [52.52, 13.4]),
+  place('France', [48.86, 2.35]),
+  place('Spain', [40.42, -3.7]),
+  place('Ireland', [53.35, -6.26]),
+  place('UK', [51.51, -0.13]),
+  place('Mexico', [19.43, -99.13]),
+  place('Belize', [17.5, -88.2]),
+  place('Guatemala', [14.63, -90.51]),
+  place('Panama', [8.98, -79.52]),
+  place('Bahamas', [25.06, -77.34]),
+  place('Dominican Republic', [18.49, -69.93]),
+  place('Aruba', [12.52, -70.03]),
+  place('Ecuador', [-0.18, -78.47]),
+  place('Peru', [-12.05, -77.04]),
+  place('Argentina', [-34.6, -58.38]),
+  place('Uruguay', [-34.9, -56.16])
+];
+
+const LIVED_MARKERS: Marker[] = PLACES.map((p) => ({
   location: p.location,
   size: 0.06
 }));
+
+const VISITED_MARKERS: Marker[] = VISITED.map((p) => ({
+  location: p.location,
+  size: 0.032,
+  color: VISITED_COLOR
+}));
+
+const ALL_MARKERS: Marker[] = [...LIVED_MARKERS, ...VISITED_MARKERS];
 
 export class Globe {
   private globe: ReturnType<typeof createGlobe>;
@@ -39,6 +92,7 @@ export class Globe {
   private started = false;
   private raf = 0;
   private disposed = false;
+  private showVisited = false;
 
   private onPointer = (e: PointerEvent) => {
     const nx = (e.clientX / window.innerWidth) * 2 - 1;
@@ -65,7 +119,7 @@ export class Globe {
       baseColor: BASE_COLOR,
       markerColor: MARKER_COLOR,
       glowColor: GLOW_COLOR,
-      markers: MARKERS
+      markers: LIVED_MARKERS
     });
 
     window.addEventListener('pointermove', this.onPointer);
@@ -103,6 +157,14 @@ export class Globe {
     if (this.started) return;
     this.started = true;
     this.speed = 0.0035;
+  }
+
+  // Layer the visited pins on top of the lived & worked beacons, or drop back
+  // to just the beacons. Markers are re-uploaded only when the layer changes.
+  setShowVisited(show: boolean) {
+    if (this.disposed || show === this.showVisited) return;
+    this.showVisited = show;
+    this.globe.update({ markers: show ? ALL_MARKERS : LIVED_MARKERS });
   }
 
   dispose() {

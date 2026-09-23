@@ -1,13 +1,19 @@
 <script lang="ts">
   import headshot from '$lib/assets/headshot.jpeg';
   import { onMount, onDestroy } from 'svelte';
-  import { Globe, PLACES } from './globe';
+  import { Globe, PLACES, VISITED } from './globe';
   import { reveal } from './reveal';
   import Preloader from './preloader.svelte';
 
   let canvasEl: HTMLCanvasElement;
   let globe: Globe | undefined;
   let revealContent = false;
+  let showVisited = false;
+
+  function toggleVisited() {
+    showVisited = !showVisited;
+    globe?.setShowVisited(showVisited);
+  }
 
   onMount(() => {
     globe = new Globe(canvasEl);
@@ -152,7 +158,7 @@
         <canvas bind:this={canvasEl} class="globe-canvas"></canvas>
         <div class="globe-legend">
           <p class="legend-cap">Lived &amp; worked</p>
-          <ul>
+          <ul class="legend-list">
             {#each PLACES as place}
               <li class="legend-item">
                 <span class="legend-dot" aria-hidden="true"></span>
@@ -161,6 +167,28 @@
               </li>
             {/each}
           </ul>
+
+          <button
+            type="button"
+            class="legend-toggle"
+            role="switch"
+            aria-checked={showVisited}
+            on:click={toggleVisited}
+          >
+            <span class="switch" aria-hidden="true"><span class="switch-knob"></span></span>
+            <span class="toggle-label">Everywhere I&rsquo;ve been</span>
+            <span class="toggle-count">{VISITED.length}</span>
+          </button>
+
+          <div class="visited" class:open={showVisited} aria-hidden={!showVisited}>
+            <div class="visited-inner">
+              <ul class="visited-list">
+                {#each VISITED as place}
+                  <li class="visited-item">{place.label}</li>
+                {/each}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -435,7 +463,7 @@
     padding-bottom: 0.6rem;
     border-bottom: 1px solid theme(colors.sandDeep);
   }
-  .globe-legend ul {
+  .legend-list {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -464,6 +492,111 @@
   .legend-coord {
     font-size: 0.66rem;
     color: theme(colors.inkFaint);
+  }
+
+  /* ---------- VISITED LAYER TOGGLE ---------- */
+  .legend-toggle {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    margin-top: 0.9rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid theme(colors.sandDeep);
+    background: none;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    text-align: left;
+    cursor: pointer;
+    color: theme(colors.inkSoft);
+  }
+  .legend-toggle:hover .toggle-label {
+    color: theme(colors.ink);
+  }
+  .legend-toggle:focus-visible {
+    outline: 2px solid theme(colors.main);
+    outline-offset: 3px;
+  }
+  .switch {
+    position: relative;
+    width: 30px;
+    height: 16px;
+    border-radius: 9999px;
+    border: 1px solid theme(colors.sandDeep);
+    background: theme(colors.sand);
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .switch-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: theme(colors.inkFaint);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .legend-toggle[aria-checked='true'] .switch {
+    background: theme(colors.main);
+    border-color: theme(colors.main);
+  }
+  .legend-toggle[aria-checked='true'] .switch-knob {
+    transform: translateX(14px);
+    background: theme(colors.paper);
+  }
+  .toggle-label {
+    font-family: theme(fontFamily.sans);
+    font-size: 0.88rem;
+    color: theme(colors.inkSoft);
+    transition: color 0.2s ease;
+  }
+  .toggle-count {
+    font-family: theme(fontFamily.mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    color: theme(colors.inkFaint);
+  }
+
+  /* ---------- VISITED LIST ---------- */
+  .visited {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease, opacity 0.25s ease;
+    opacity: 0;
+  }
+  .visited.open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .visited-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+  /* A flowing margin note rather than a column of rows — it stays short enough
+     to expand inside the hero without pushing the fold. */
+  .visited-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.45rem;
+  }
+  .visited-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    font-family: theme(fontFamily.sans);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: theme(colors.inkSoft);
+    white-space: nowrap;
+  }
+  .visited-item:not(:last-child)::after {
+    content: '·';
+    color: theme(colors.sandDeep);
   }
 
   /* ---------- SCROLL CUE / COMPASS ---------- */
@@ -748,5 +881,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .compass { animation: none; }
+    .visited,
+    .switch,
+    .switch-knob { transition: none; }
   }
 </style>
