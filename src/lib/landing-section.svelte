@@ -139,8 +139,8 @@
         <p class="hero-sub text-balance">
           Across software, AI, GIS, climate, and fiber infrastructure, the thread is the same:
           understanding how complex systems work beneath the surface. I learn through firsthand
-          experience — living abroad, learning languages, and spending time outdoors — because the
-          most interesting systems rarely exist in isolation, and rarely fit neatly on a screen.
+          experience — living abroad, learning languages, and spending time outdoors — because life
+          can’t be lived behind a laptop screen.
         </p>
 
         <div class="hero-meta">
