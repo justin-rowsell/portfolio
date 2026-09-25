@@ -6,6 +6,9 @@
 
 	// Frames on the wall grow from this height to fill each row.
 	const ROW_HEIGHT = 280;
+	// Enough painted panels to cover the tallest wall (one column on a phone);
+	// the extras are clipped.
+	const FRESCO_PANELS = 24;
 	const total = PHOTOS.length;
 	const photos = PHOTOS.map((photo, i) => ({
 		...photo,
@@ -136,6 +139,14 @@
 				</header>
 
 				<section aria-label="Photographs" class="works">
+					<!-- The wall is painted like a palazzo ceiling: two Tiepolo ceiling studies
+					     (The Met, open access) alternate down it, divided by gilt mouldings. -->
+					<div class="fresco" aria-hidden="true">
+						{#each Array(FRESCO_PANELS) as _, i}
+							<div class="cornice" />
+							<div class="fresco-panel" class:alt={i % 2 === 1} />
+						{/each}
+					</div>
 					{#each photos as p, i (p.slug)}
 						<figure
 							class="work"
@@ -423,11 +434,61 @@
 	}
 
 	.works {
+		position: relative;
+		isolation: isolate;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-end;
 		gap: clamp(2.75rem, 5vw, 4.5rem) clamp(1.5rem, 3vw, 2.5rem);
-		padding-top: clamp(3rem, 6vw, 5rem);
+		padding: clamp(3rem, 6vw, 5rem) 0;
+	}
+	.fresco {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		width: 100vw;
+		transform: translateX(-50%);
+		z-index: -1;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+	/* A light plaster wash so the frames, not the painting, lead */
+	.fresco::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba(241, 233, 219, 0.08);
+		box-shadow: inset 0 -40px 40px -20px rgba(232, 220, 198, 0.9);
+	}
+	.fresco-panel {
+		flex: none;
+		/* On narrow screens, crop the painting rather than shrink its figures */
+		width: max(100%, 800px);
+		align-self: center;
+		aspect-ratio: 2000 / 2652;
+		background: url('/images/fresco-planets.webp') center / cover;
+	}
+	.fresco-panel.alt {
+		aspect-ratio: 2000 / 2819;
+		background-image: url('/images/fresco-giustiniani.webp');
+	}
+	.cornice {
+		flex: none;
+		position: relative;
+		z-index: 1;
+		height: 16px;
+		background: linear-gradient(
+			180deg,
+			#3a270d,
+			#e1ad66 18%,
+			#ffe3bf 32%,
+			#a06f24 55%,
+			#7d5411 78%,
+			#3a270d
+		);
+		box-shadow: 0 4px 10px rgba(35, 22, 5, 0.45);
 	}
 	.work {
 		margin: 0;
@@ -479,7 +540,11 @@
 		grid-template-columns: 1fr auto;
 		gap: var(--space-1) var(--space-3);
 		align-items: baseline;
-		padding: 0 2px;
+		/* A cream wall label, so captions read over the painting */
+		padding: 8px 10px;
+		background: rgba(246, 236, 217, 0.94);
+		border: 1px solid rgba(194, 141, 65, 0.55);
+		box-shadow: 0 3px 10px rgba(35, 22, 5, 0.3);
 	}
 	.work-title {
 		font-family: var(--font-heading);
