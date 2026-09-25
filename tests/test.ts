@@ -21,3 +21,16 @@ test('globe legend toggles the places visited', async ({ page }) => {
 	await expect(page.locator('.visited-item')).toHaveCount(25);
 	await expect(page.locator('.visited-item').first()).toBeVisible();
 });
+
+test('blog index renders and links from the nav', async ({ page }) => {
+	await page.goto('/blog');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Notes from\s*the field/);
+	await expect(page.locator('nav.nav a[href="/blog"]')).toBeVisible();
+});
+
+test('rss feed is served for Buttondown', async ({ request }) => {
+	const res = await request.get('/rss.xml');
+	expect(res.ok()).toBe(true);
+	expect(res.headers()['content-type']).toMatch(/xml/);
+	expect(await res.text()).toContain('<atom:link href="https://justinrowsell.dev/rss.xml"');
+});
