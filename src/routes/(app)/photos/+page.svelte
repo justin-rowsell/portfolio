@@ -186,7 +186,6 @@
 				</section>
 
 				<div class="wall-foot">
-					<span>Prints available on request — write to me from the contact page.</span>
 					<button type="button" class="btn btn-gold" on:click={play}>Re-enter the vault</button>
 				</div>
 			</div>
@@ -580,14 +579,9 @@
 		border-top: 1px solid #a06f24;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-items: center;
 		gap: var(--space-3);
-		font-size: 12px;
-		color: #605d5d;
-	}
-	.wall-foot span {
-		font-style: italic;
 	}
 
 	.btn {
