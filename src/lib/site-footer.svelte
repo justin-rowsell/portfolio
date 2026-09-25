@@ -4,6 +4,7 @@
 		<nav class="footer-links">
 			<a href="https://aquaberry.io" target="_blank" rel="noreferrer">Aquaberry</a>
 			<a href="/blog">Blog</a>
+			<a href="/photos">Photos</a>
 			<a href="/rss.xml">RSS</a>
 			<a href="https://www.linkedin.com/in/justin-rowsell/" target="_blank" rel="noreferrer"
 				>LinkedIn</a
