@@ -10,7 +10,7 @@
     <img class="brand-mark" src={favicon} alt="Aquaberry" />
   </a>
   <div class="nav-links">
-    <NavLink link={'https://substack.com/@justinrowsell'} iconCode={'book'} linkText={'Blog'} {hoverColor} />
+    <NavLink link={'/blog'} iconCode={'book'} linkText={'Blog'} {hoverColor} />
     <NavLink link={'https://aquaberry.io/cto'} iconCode={'handshake'} linkText={'Work with me'} {hoverColor} />
   </div>
 </nav>

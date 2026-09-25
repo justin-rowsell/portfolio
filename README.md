@@ -1,4 +1,28 @@
-# create-svelte
+# justinrowsell.dev
+
+## Writing a post
+
+Add a markdown file to `src/posts/`. The filename becomes the permanent link, so pick it once and never rename it:
+`src/posts/why-i-killed-this-idea.md` → `https://justinrowsell.dev/blog/why-i-killed-this-idea`
+
+```md
+---
+title: Why I killed this idea
+date: 2026-09-24
+tags: [building solo, climate]
+summary: Optional. Defaults to the first paragraph.
+updated: 2026-10-02   # optional, shows a "revised" note
+draft: true           # optional, only visible in `npm run dev`
+---
+
+Write here.
+```
+
+- Tags are free-form; each gets a page at `/blog/tags/<tag>` listing every post on it, oldest first.
+- New posts go out by email automatically: Buttondown watches `https://justinrowsell.dev/rss.xml`.
+- Leave old posts up. Revise with `updated:` rather than deleting.
+
+## SvelteKit
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 

@@ -4,6 +4,7 @@
   import { Globe, PLACES, VISITED } from './globe';
   import { reveal } from './reveal';
   import Preloader from './preloader.svelte';
+  import SiteFooter from './site-footer.svelte';
 
   let canvasEl: HTMLCanvasElement;
   let globe: Globe | undefined;
@@ -312,17 +313,7 @@
     </div>
   </section>
 
-  <footer class="site-footer">
-    <div class="wrap footer-grid">
-      <p class="footer-mark">Justin Rowsell</p>
-      <nav class="footer-links">
-        <a href="https://aquaberry.io" target="_blank" rel="noreferrer">Aquaberry</a>
-        <a href="https://substack.com/@justinrowsell" target="_blank" rel="noreferrer">Blog</a>
-        <a href="https://www.linkedin.com/in/justin-rowsell/" target="_blank" rel="noreferrer">LinkedIn</a>
-      </nav>
-      <p class="footer-fine">An Aquaberry Jam · Building software for tomorrow</p>
-    </div>
-  </footer>
+  <SiteFooter />
 </main>
 
 <style lang="postcss">
@@ -337,7 +328,6 @@
   .kicker,
   .section-kicker,
   .project-index,
-  .footer-fine,
   .scroll-cue,
   .legend-cap,
   .legend-coord {
@@ -848,36 +838,6 @@
     color: theme(colors.ink);
   }
   .btn-ghost:hover { border-color: theme(colors.ink); color: theme(colors.ink); }
-
-  /* ---------- FOOTER ---------- */
-  .site-footer {
-    padding: 3rem clamp(1.5rem, 5vw, 5rem);
-    border-top: 1px solid theme(colors.sandDeep);
-  }
-  .footer-grid {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-  }
-  .footer-mark {
-    font-family: theme(fontFamily.display);
-    font-size: 1.25rem;
-    color: theme(colors.ink);
-    margin: 0;
-  }
-  .footer-links {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
-  .footer-links a {
-    font-size: 0.9rem;
-    color: theme(colors.inkSoft);
-  }
-  .footer-links a:hover { color: theme(colors.main); }
-  .footer-fine { margin: 0; flex-basis: 100%; }
 
   @media (prefers-reduced-motion: reduce) {
     .compass { animation: none; }
