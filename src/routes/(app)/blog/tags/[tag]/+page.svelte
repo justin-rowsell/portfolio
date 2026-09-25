@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Contour from '$lib/blog/contour.svelte';
 	import Seo from '$lib/seo.svelte';
+	import { BLOG_IMAGE, BLOG_NAME, BLOG_TITLE } from '$lib/blog/config';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
 	import { formatDate } from '$lib/blog/format';
@@ -19,7 +20,8 @@
 </script>
 
 <Seo
-	title="{data.tag.name} — Field notes — Justin Rowsell"
+	image={BLOG_IMAGE}
+	title="{data.tag.name} — {BLOG_TITLE}"
 	description="Everything I’ve written about {data.tag.name}, oldest first."
 	path="/blog/tags/{data.tag.slug}"
 />
@@ -28,7 +30,8 @@
 	<Contour lines={10} />
 	<div class="masthead-inner">
 		<a class="back" href="/blog">
-			<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> All notes
+			<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+			{BLOG_NAME}
 		</a>
 		<p class="kicker">
 			Trail · {data.posts.length}

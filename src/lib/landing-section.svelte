@@ -5,6 +5,7 @@
   import { reveal } from './reveal';
   import Preloader from './preloader.svelte';
   import SiteFooter from './site-footer.svelte';
+  import { BLOG_NAME, BUTTONDOWN_SUBSCRIBE_URL } from './blog/config';
 
   let canvasEl: HTMLCanvasElement;
   let globe: Globe | undefined;
@@ -150,6 +151,9 @@
             </a>
             <a class="btn btn-ghost" href="https://www.linkedin.com/in/justin-rowsell/" target="_blank" rel="noreferrer">
               <span class="material-symbols-outlined">arrow_outward</span> Connect
+            </a>
+            <a class="btn btn-ghost" href="#newsletter">
+              <span class="material-symbols-outlined">mail</span> Newsletter
             </a>
           </div>
         </div>
@@ -309,6 +313,29 @@
         <a class="btn btn-ghost" href="https://aquaberry.io" target="_blank" rel="noreferrer">
           <span class="material-symbols-outlined">arrow_outward</span> See Aquaberry
         </a>
+      </div>
+
+      <div id="newsletter" class="signup reveal" use:reveal={{ delay: 220 }}>
+        <p class="signup-or"><span>or hear from me</span></p>
+        <p class="signup-lede">
+          <a href="/blog"><em>{BLOG_NAME}</em></a> — short notes on what I’m building, learning, and
+          exploring, straight to your inbox.
+        </p>
+        <form class="signup-form" action={BUTTONDOWN_SUBSCRIBE_URL} method="post" target="_blank">
+          <label class="sr-only" for="newsletter-email">Email address</label>
+          <input
+            id="newsletter-email"
+            class="signup-input"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <input type="hidden" name="embed" value="1" />
+          <button class="btn btn-solid" type="submit">
+            <span class="material-symbols-outlined">mail</span> Subscribe
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -812,6 +839,76 @@
     border-color: rgba(246, 239, 228, 0.35);
   }
   .band-cta .btn-ghost:hover { border-color: theme(colors.paper); color: theme(colors.paper); }
+
+  /* Newsletter signup, under the work-with-me buttons */
+  .signup {
+    max-width: 34rem;
+    margin: 3.5rem auto 0;
+    /* Land the #newsletter jump with the band's heading still in view */
+    scroll-margin-top: 30vh;
+  }
+  .signup-or {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.5rem;
+    font-family: theme(fontFamily.mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246, 239, 228, 0.5);
+  }
+  .signup-or::before,
+  .signup-or::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(246, 239, 228, 0.2);
+  }
+  .signup-lede {
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(246, 239, 228, 0.75);
+  }
+  .signup-lede a {
+    font-family: theme(fontFamily.display);
+    font-size: 1.15rem;
+    color: theme(colors.paper);
+  }
+  .signup-lede a:hover { color: theme(colors.glow); }
+  .signup-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .signup-input {
+    flex: 1 1 14rem;
+    min-width: 0;
+    font: inherit;
+    font-size: 0.95rem;
+    color: theme(colors.paper);
+    background: rgba(246, 239, 228, 0.06);
+    border: 1px solid rgba(246, 239, 228, 0.35);
+    border-radius: 9999px;
+    padding: 0.7rem 1.2rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .signup-input::placeholder { color: rgba(246, 239, 228, 0.4); }
+  .signup-input:focus {
+    outline: none;
+    border-color: theme(colors.paper);
+    background: rgba(246, 239, 228, 0.1);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 
   /* ---------- BUTTONS ---------- */
   .btn {

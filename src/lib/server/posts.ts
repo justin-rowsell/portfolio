@@ -1,5 +1,5 @@
 import { dev } from '$app/environment';
-import { marked } from 'marked';
+import { renderMarkdown } from '$lib/blog/markdown';
 import { parseFrontmatter } from '$lib/blog/frontmatter';
 import { tagSlug } from '$lib/blog/format';
 import type { Post, PostMeta, Tag, TagSummary } from '$lib/blog/types';
@@ -72,7 +72,7 @@ function load(path: string, source: string): Post {
 		tags,
 		draft: data.draft === true,
 		readingMinutes: Math.max(1, Math.round(words / 220)),
-		html: marked.parse(body)
+		html: renderMarkdown(body)
 	};
 }
 

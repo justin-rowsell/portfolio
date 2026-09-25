@@ -24,7 +24,7 @@ test('globe legend toggles the places visited', async ({ page }) => {
 
 test('blog index renders and links from the nav', async ({ page }) => {
 	await page.goto('/blog');
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Notes from\s*the field/);
+	await expect(page.getByRole('heading', { level: 1, name: /Far Afield/ })).toBeVisible();
 	await expect(page.locator('nav.nav a[href="/blog"]')).toBeVisible();
 });
 
@@ -33,4 +33,13 @@ test('rss feed is served for Buttondown', async ({ request }) => {
 	expect(res.ok()).toBe(true);
 	expect(res.headers()['content-type']).toMatch(/xml/);
 	expect(await res.text()).toContain('<atom:link href="https://justinrowsell.dev/rss.xml"');
+});
+
+test('home page newsletter button leads to the Far Afield signup', async ({ page }) => {
+	await page.goto('/');
+	await expect(page.getByRole('link', { name: 'Newsletter' })).toHaveAttribute('href', '#newsletter');
+
+	const form = page.locator('#newsletter form');
+	await expect(form).toHaveAttribute('action', /buttondown\.com\/api\/emails\/embed-subscribe\//);
+	await expect(form.getByLabel('Email address')).toHaveAttribute('type', 'email');
 });
