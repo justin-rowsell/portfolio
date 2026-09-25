@@ -8,6 +8,8 @@
 	export let published: string | undefined = undefined;
 	export let modified: string | undefined = undefined;
 	export let tags: string[] = [];
+	/** Root-relative path to a link-preview image */
+	export let image: string | undefined = undefined;
 
 	$: url = `${SITE_URL}${path}`;
 </script>
@@ -20,7 +22,12 @@
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content={type} />
 	<meta property="og:url" content={url} />
-	<meta name="twitter:card" content="summary" />
+	{#if image}
+		<meta property="og:image" content="{SITE_URL}{image}" />
+		<meta name="twitter:card" content="summary_large_image" />
+	{:else}
+		<meta name="twitter:card" content="summary" />
+	{/if}
 	{#if published}<meta property="article:published_time" content={published} />{/if}
 	{#if modified}<meta property="article:modified_time" content={modified} />{/if}
 	{#each tags as tag}<meta property="article:tag" content={tag} />{/each}

@@ -3,7 +3,7 @@
 	import Seo from '$lib/seo.svelte';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
-	import { SITE_URL } from '$lib/blog/config';
+	import { BLOG_IMAGE, BLOG_NAME, SITE_URL } from '$lib/blog/config';
 	import { formatDate } from '$lib/blog/format';
 	import type { PageData } from './$types';
 
@@ -14,6 +14,7 @@
 </script>
 
 <Seo
+	image={BLOG_IMAGE}
 	title="{post.title} — Justin Rowsell"
 	description={post.summary}
 	path="/blog/{post.slug}"
@@ -28,7 +29,8 @@
 		<Contour lines={9} />
 		<div class="masthead-inner narrow">
 			<a class="back" href="/blog">
-				<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span> All notes
+				<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+				{BLOG_NAME}
 			</a>
 			<p class="kicker">
 				<time datetime={post.date}>{formatDate(post.date)}</time>
@@ -250,6 +252,26 @@
 		max-width: 100%;
 		height: auto;
 		border-radius: 0.75rem;
+	}
+	.prose :global(figure) {
+		margin: 2.2em 0;
+		text-align: center;
+	}
+	/* Centered, and capped so tall phone photos don't swallow the screen. */
+	.prose :global(figure img) {
+		display: block;
+		margin: 0 auto;
+		max-height: 75vh;
+		width: auto;
+	}
+	.prose :global(figcaption) {
+		max-width: 34rem;
+		margin: 0.8rem auto 0;
+		font-family: theme(fontFamily.display);
+		font-style: italic;
+		font-size: 0.95rem;
+		line-height: 1.5;
+		color: theme(colors.inkSoft);
 	}
 	.prose :global(table) {
 		width: 100%;

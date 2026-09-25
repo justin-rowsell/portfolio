@@ -18,6 +18,18 @@ draft: true           # optional, only visible in `npm run dev`
 Write here.
 ```
 
+### Photos
+
+Put images in `static/images/<post-slug>/` and reference them from the root. An image on its own line becomes a centered figure, and the quoted text becomes its caption:
+
+```md
+![Umbrellas outside a Seoul cafe](/images/more-korea/umbrellas.jpg "We love sunny days, as long as we're not in the sun")
+```
+
+Resize phone photos to about 1600px on the long edge before adding them (on a Mac: `sips -Z 1600 photo.jpg`).
+
+### Notes
+
 - Tags are free-form; each gets a page at `/blog/tags/<tag>` listing every post on it, oldest first.
 - New posts go out by email automatically: Buttondown watches `https://justinrowsell.dev/rss.xml`.
 - Leave old posts up. Revise with `updated:` rather than deleting.

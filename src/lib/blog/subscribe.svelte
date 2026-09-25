@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BUTTONDOWN_USERNAME } from './config';
+	import { BLOG_NAME, BUTTONDOWN_SUBSCRIBE_URL } from './config';
 
 	/** Stay single-column, for use inside the post's reading column. */
 	export let narrow = false;
@@ -7,17 +7,12 @@
 
 <aside class="subscribe" class:narrow>
 	<div class="copy">
-		<p class="kicker">Get new notes by email</p>
+		<p class="kicker">Get {BLOG_NAME} by email</p>
 		<p class="lede">
 			Occasional, short, and unpolished. Each new post lands in your inbox — nothing else.
 		</p>
 	</div>
-	<form
-		class="form"
-		action="https://buttondown.com/api/emails/embed-subscribe/{BUTTONDOWN_USERNAME}"
-		method="post"
-		target="_blank"
-	>
+	<form class="form" action={BUTTONDOWN_SUBSCRIBE_URL} method="post" target="_blank">
 		<label class="sr-only" for="bd-email">Email address</label>
 		<input
 			id="bd-email"

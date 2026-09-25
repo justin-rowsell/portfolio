@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Contour from '$lib/blog/contour.svelte';
 	import Seo from '$lib/seo.svelte';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
-	import { BLOG_DESCRIPTION, BLOG_TITLE } from '$lib/blog/config';
+	import { BLOG_DESCRIPTION, BLOG_IMAGE, BLOG_NAME, BLOG_TITLE } from '$lib/blog/config';
 	import { formatDayMonth, yearOf } from '$lib/blog/format';
 	import type { PageData } from './$types';
 
@@ -18,28 +17,35 @@
 	}, []);
 </script>
 
-<Seo title={BLOG_TITLE} description={BLOG_DESCRIPTION} path="/blog" />
+<Seo title={BLOG_TITLE} description={BLOG_DESCRIPTION} path="/blog" image={BLOG_IMAGE} />
 
-<header class="masthead">
-	<Contour lines={12} />
-	<div class="masthead-inner">
-		<p class="kicker">
-			Field notes{#if data.posts.length}
-				· {data.posts.length} {data.posts.length === 1 ? 'entry' : 'entries'}{/if}
-		</p>
-		<h1 class="title">Notes from<br />the field</h1>
-		<p class="lede text-balance">
-			Short, dated notes on what I’m building, learning, and still confused about. The early,
-			half-formed takes stay up on purpose — they’re the record of how I got here.
-		</p>
-		{#if data.tags.length}
-			<div class="tag-row">
-				<span class="kicker">Follow a trail</span>
-				<TagList tags={data.tags} />
-			</div>
-		{/if}
-	</div>
+<header class="banner">
+	<h1 class="banner-title">
+		<img
+			src="/images/far-afield.webp"
+			alt="{BLOG_NAME} — Justin Rowsell"
+			width="1672"
+			height="941"
+		/>
+	</h1>
 </header>
+
+<div class="section intro">
+	<p class="kicker">
+		Field notes{#if data.posts.length}
+			· {data.posts.length} {data.posts.length === 1 ? 'entry' : 'entries'}{/if}
+	</p>
+	<p class="lede text-balance">
+		Short, dated notes on what I’m building, learning, and still confused about. The early,
+		half-formed takes stay up on purpose — they’re the record of how I got here.
+	</p>
+	{#if data.tags.length}
+		<div class="tag-row">
+			<span class="kicker">Follow a trail</span>
+			<TagList tags={data.tags} />
+		</div>
+	{/if}
+</div>
 
 <section class="section log">
 	{#each years as group}
@@ -78,14 +84,43 @@
 </section>
 
 <style lang="postcss">
-	.title {
-		font-family: theme(fontFamily.display);
-		font-weight: 400;
-		font-size: clamp(3rem, 9vw, 6.5rem);
-		line-height: 0.95;
-		letter-spacing: -0.04em;
-		color: theme(colors.ink);
-		margin: 1rem 0 1.5rem;
+	/* Full-bleed banner. The name is part of the image, so crop gently and never from the sides on
+	   wide screens; the bottom fades into the page. */
+	.banner {
+		position: relative;
+		background: theme(colors.paper);
+	}
+	.banner-title {
+		margin: 0;
+	}
+	.banner img {
+		display: block;
+		width: 100%;
+		height: clamp(260px, 56.25vw, 78vh);
+		object-fit: cover;
+		object-position: 50% 30%;
+	}
+	.banner::after {
+		content: '';
+		position: absolute;
+		inset: auto 0 0;
+		height: 28%;
+		background: linear-gradient(to bottom, rgba(246, 239, 228, 0), theme(colors.paper));
+		pointer-events: none;
+	}
+	/* Clear the floating nav on phones, where the banner is short */
+	@media (max-width: 640px) {
+		.banner {
+			padding-top: 4rem;
+		}
+	}
+	.intro {
+		padding-top: clamp(1rem, 3vw, 2rem);
+		padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+		border-bottom: 1px solid theme(colors.sandDeep);
+	}
+	.intro .lede {
+		margin-top: 0.9rem;
 	}
 	.lede {
 		max-width: 38rem;
