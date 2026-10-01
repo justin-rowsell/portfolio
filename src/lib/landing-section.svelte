@@ -69,7 +69,7 @@
       title: 'Geography & GIS',
       lede: 'Years spent with maps, geospatial data, and the shape of the land.',
       body:
-        'GIS, cartography, fiber network design, biodiversity and climate work — geography is the recurring thread across my career and my curiosity. I think in places, routes, and terrain as much as in code.'
+        'GIS, cartography, biodiversity and climate work — geography is the recurring thread across my career and my curiosity. I think in places, routes, and terrain as much as in code.'
     },
     {
       icon: 'eco',
@@ -81,9 +81,9 @@
     {
       icon: 'lan',
       title: 'Infrastructure',
-      lede: 'Three years designing fiber networks — how the digital world is physically built.',
+      lede: 'Building software for fiber providers — how the digital world is physically built.',
       body:
-        'Conduit, last-mile routing, real terrain and real constraints. Building telecom infrastructure grounded me in systems you can’t refactor away, and it shapes how I build digital products today.'
+        'Conduit, last-mile routing, real terrain and real constraints. Building the operations software fiber companies run on grounded me in systems you can’t refactor away — the same physical layer every data center depends on.'
     }
   ];
 
@@ -224,7 +224,7 @@
       </h2>
       <p class="section-intro reveal text-balance" use:reveal={{ delay: 120 }}>
         I build products that help people learn, create, and navigate complex information — grounded
-        in years of shipping real-world systems, from web platforms to fiber network design. Current
+        in years of shipping real-world systems, from web platforms to fiber network software. Current
         areas of focus:
       </p>
 
