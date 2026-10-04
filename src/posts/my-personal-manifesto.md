@@ -1,7 +1,7 @@
 ---
 title: "My Personal Manifesto"
 date: 2026-10-04
-tags: [Intro/General]
+tags: [Thoughts]
 summary: ""
 image: /images/my-personal-manifesto/fuego-after-dark.jpg
 draft: true

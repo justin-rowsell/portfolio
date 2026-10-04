@@ -1,8 +1,14 @@
+<script lang="ts">
+	import aquaberry from '$lib/assets/aquaberry.png';
+</script>
+
 <footer class="site-footer">
 	<div class="wrap footer-grid">
 		<p class="footer-mark">Justin Rowsell</p>
 		<nav class="footer-links">
-			<a href="https://aquaberry.io" target="_blank" rel="noreferrer">Aquaberry</a>
+			<a class="aquaberry" href="https://aquaberry.io" target="_blank" rel="noreferrer">
+				<img src={aquaberry} alt="" width="350" height="615" />Aquaberry
+			</a>
 			<a href="/blog">Blog</a>
 			<a href="/rss.xml">RSS</a>
 			<a href="https://www.linkedin.com/in/justin-rowsell/" target="_blank" rel="noreferrer"
@@ -43,6 +49,15 @@
 	.footer-links a {
 		font-size: 0.9rem;
 		color: theme(colors.inkSoft);
+	}
+	.aquaberry {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+	.aquaberry img {
+		height: 1.15em;
+		width: auto;
 	}
 	.footer-links a:hover {
 		color: theme(colors.main);
