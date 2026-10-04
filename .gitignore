@@ -9,3 +9,7 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Photo renditions live in R2, not git (scripts/photo.sh, scripts/upload-photos.sh)
+/photos
+.wrangler

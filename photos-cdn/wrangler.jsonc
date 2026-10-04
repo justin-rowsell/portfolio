@@ -1,0 +1,8 @@
+// Cloudflare Pages project that fronts the portfolio-photos R2 bucket.
+// Deploy from this directory: npx wrangler@4 pages deploy
+{
+	"name": "portfolio-photos",
+	"pages_build_output_dir": "public",
+	"compatibility_date": "2026-09-25",
+	"r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "portfolio-photos" }]
+}
