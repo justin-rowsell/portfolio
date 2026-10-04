@@ -4,7 +4,6 @@ date: 2026-10-04
 tags: [Thoughts]
 summary: ""
 image: /images/my-personal-manifesto/fuego-after-dark.jpg
-draft: true
 notion: 3e545625235d80039bc7cde3605630b0
 ---
 
