@@ -82,6 +82,7 @@ function load(path: string, source: string): Post {
 		image: image as string | undefined,
 		tags,
 		draft: data.draft === true,
+		notByAI: data.notbyai !== false,
 		readingMinutes: Math.max(1, Math.round(words / 220)),
 		html: renderMarkdown(body)
 	};

@@ -16,6 +16,8 @@ export interface PostMeta {
 	image?: string;
 	tags: Tag[];
 	draft: boolean;
+	/** Show the "Written by Human, Not by AI" badge. On unless the post sets `notbyai: false`. */
+	notByAI: boolean;
 	readingMinutes: number;
 }
 

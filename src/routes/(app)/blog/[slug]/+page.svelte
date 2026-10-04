@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Contour from '$lib/blog/contour.svelte';
+	import NotByAi from '$lib/blog/not-by-ai.svelte';
 	import Seo from '$lib/seo.svelte';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
@@ -63,10 +64,13 @@
 			</div>
 
 			<footer class="post-foot">
-				<p class="permalink">
-					<span class="kicker">Permalink</span>
-					<a href="/blog/{post.slug}">{permalink.replace('https://', '')}</a>
-				</p>
+				<div class="foot-row">
+					<p class="permalink">
+						<span class="kicker">Permalink</span>
+						<a href="/blog/{post.slug}">{permalink.replace('https://', '')}</a>
+					</p>
+					{#if post.notByAI}<NotByAi />{/if}
+				</div>
 
 				{#if data.newer || data.older}
 					<nav class="pager" aria-label="More notes">
@@ -490,6 +494,13 @@
 		margin-top: clamp(2.5rem, 6vw, 4rem);
 		padding-top: 2rem;
 		border-top: 1px solid theme(colors.sandDeep);
+	}
+	.foot-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.25rem 2rem;
 	}
 	.permalink {
 		display: flex;
