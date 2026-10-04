@@ -28,11 +28,9 @@ Put images in `static/images/<post-slug>/` and reference them from the root. An 
 
 Resize phone photos to about 1600px on the long edge before adding them (on a Mac: `sips -Z 1600 photo.jpg`).
 
-### Not By AI badge
+### Brainmade mark
 
-Every post shows the "Written by Human, Not by AI" badge from [notbyai.fyi](https://notbyai.fyi) at the bottom, next to the permalink. It's an honor system: use it only when at least 90% of the post is your own work ([their 90% rule](https://notbyai.fyi/not-by-ai-90-rule)). Add `notbyai: false` to a post's frontmatter to hide it there.
-
-The badge file lives at `src/lib/assets/not-by-ai.svg`. Their rules say not to alter it in any way (color, text or effects) and to show it at least 42px tall; the component handles the size and the link.
+Every post shows the [Brainmade](https://brainmade.org) mark at the bottom, next to the permalink, to say a person wrote it. It's public domain and works on the honor system: their bar is roughly 90% human-made. Add `brainmade: false` to a post's frontmatter to hide it there.
 
 ### Banner and link previews
 

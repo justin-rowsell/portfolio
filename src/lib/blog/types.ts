@@ -16,8 +16,8 @@ export interface PostMeta {
 	image?: string;
 	tags: Tag[];
 	draft: boolean;
-	/** Show the "Written by Human, Not by AI" badge. On unless the post sets `notbyai: false`. */
-	notByAI: boolean;
+	/** Show the Brainmade "made by a human" mark. On unless the post sets `brainmade: false`. */
+	brainmade: boolean;
 	readingMinutes: number;
 }
 

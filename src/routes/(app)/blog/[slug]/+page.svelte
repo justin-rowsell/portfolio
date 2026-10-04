@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Contour from '$lib/blog/contour.svelte';
-	import NotByAi from '$lib/blog/not-by-ai.svelte';
+	import Brainmade from '$lib/blog/brainmade.svelte';
 	import Seo from '$lib/seo.svelte';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
@@ -69,7 +69,7 @@
 						<span class="kicker">Permalink</span>
 						<a href="/blog/{post.slug}">{permalink.replace('https://', '')}</a>
 					</p>
-					{#if post.notByAI}<NotByAi />{/if}
+					{#if post.brainmade}<Brainmade />{/if}
 				</div>
 
 				{#if data.newer || data.older}
