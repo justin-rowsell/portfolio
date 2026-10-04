@@ -16,10 +16,11 @@
 
 <svelte:head>
 	<title>{title}</title>
-	<meta name="description" content={description} />
+	{#if description}<meta name="description" content={description} />{/if}
 	<link rel="canonical" href={url} />
 	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description} />
+	{#if description}<meta property="og:description" content={description} />{/if}
+	<meta property="og:site_name" content="Justin Rowsell" />
 	<meta property="og:type" content={type} />
 	<meta property="og:url" content={url} />
 	{#if image}
