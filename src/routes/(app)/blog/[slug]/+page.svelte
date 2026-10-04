@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Contour from '$lib/blog/contour.svelte';
+	import Brainmade from '$lib/blog/brainmade.svelte';
 	import Seo from '$lib/seo.svelte';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
@@ -14,7 +15,7 @@
 </script>
 
 <Seo
-	image={BLOG_IMAGE}
+	image={post.image ?? BLOG_IMAGE}
 	title="{post.title} — Justin Rowsell"
 	description={post.summary}
 	path="/blog/{post.slug}"
@@ -25,8 +26,14 @@
 />
 
 <article>
-	<header class="masthead">
-		<Contour lines={9} />
+	{#if post.image}
+		<div class="banner">
+			<img src={post.image} alt="" />
+		</div>
+	{/if}
+
+	<header class="masthead" class:has-banner={post.image}>
+		{#if !post.image}<Contour lines={9} />{/if}
 		<div class="masthead-inner narrow">
 			<a class="back" href="/blog">
 				<span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
@@ -57,10 +64,13 @@
 			</div>
 
 			<footer class="post-foot">
-				<p class="permalink">
-					<span class="kicker">Permalink</span>
-					<a href="/blog/{post.slug}">{permalink.replace('https://', '')}</a>
-				</p>
+				<div class="foot-row">
+					<p class="permalink">
+						<span class="kicker">Permalink</span>
+						<a href="/blog/{post.slug}">{permalink.replace('https://', '')}</a>
+					</p>
+					{#if post.brainmade}<Brainmade />{/if}
+				</div>
 
 				{#if data.newer || data.older}
 					<nav class="pager" aria-label="More notes">
@@ -86,6 +96,21 @@
 </article>
 
 <style lang="postcss">
+	/* Full-bleed photo below the nav. No fade into the page: on a dark photo it turns muddy. */
+	.banner {
+		padding-top: 4.5rem;
+	}
+	.banner img {
+		display: block;
+		width: 100%;
+		height: clamp(220px, 42vw, 62vh);
+		object-fit: cover;
+		object-position: 50% 40%;
+	}
+	.masthead.has-banner {
+		padding-top: clamp(2rem, 5vw, 3.5rem);
+	}
+
 	.narrow {
 		max-width: 44rem;
 		margin-left: auto;
@@ -205,6 +230,10 @@
 	.prose :global(li) {
 		margin: 0.35em 0;
 	}
+	.prose :global(li > ul),
+	.prose :global(li > ol) {
+		margin: 0.35em 0 0;
+	}
 	.prose :global(li::marker) {
 		color: theme(colors.main);
 	}
@@ -284,6 +313,179 @@
 		padding: 0.5rem 0.75rem;
 		border-bottom: 1px solid theme(colors.sandDeep);
 	}
+	/* Tables without a header row in Notion get an empty one, since markdown needs it. */
+	.prose :global(thead:not(:has(th:not(:empty)))) {
+		display: none;
+	}
+
+	/* ---------- FROM NOTION (see scripts/notion) ---------- */
+	.prose :global(u) {
+		text-decoration-thickness: 1px;
+		text-underline-offset: 3px;
+	}
+	.prose :global(s),
+	.prose :global(del) {
+		color: theme(colors.inkSoft);
+	}
+	.prose :global(mark) {
+		color: inherit;
+		border-radius: 0.2em;
+		padding: 0 0.15em;
+	}
+
+	/* Checklists */
+	.prose :global(li:has(> input[type='checkbox'])) {
+		list-style: none;
+		margin-left: -1.4em;
+	}
+	/* Drawn by hand: browsers grey out disabled checkboxes, which reads as "not done". */
+	.prose :global(li > input[type='checkbox']) {
+		appearance: none;
+		width: 1em;
+		height: 1em;
+		margin: 0 0.5em 0 0;
+		vertical-align: -0.12em;
+		border: 1.5px solid theme(colors.inkFaint);
+		border-radius: 0.25em;
+	}
+	.prose :global(li > input[type='checkbox']:checked) {
+		border-color: theme(colors.main);
+		background: theme(colors.main)
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23F6EFE4' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+			center / 100% no-repeat;
+	}
+
+	/* Callouts */
+	.prose :global(.callout) {
+		display: flex;
+		gap: 0.75rem;
+		margin: 0 0 1.4em;
+		padding: 1rem 1.2rem;
+		border-radius: 0.75rem;
+		background: theme(colors.sand);
+	}
+	.prose :global(.callout-icon) {
+		flex: none;
+		line-height: 1.75;
+	}
+	.prose :global(.callout-body) {
+		flex: 1;
+		min-width: 0;
+	}
+	.prose :global(.callout-body > :last-child) {
+		margin-bottom: 0;
+	}
+
+	/* Toggles */
+	.prose :global(details) {
+		margin: 0 0 1.4em;
+	}
+	.prose :global(summary) {
+		cursor: pointer;
+	}
+	.prose :global(summary::marker) {
+		color: theme(colors.main);
+	}
+	.prose :global(summary > *) {
+		display: inline;
+		margin: 0;
+	}
+	.prose :global(details > :not(summary)) {
+		margin-left: 1.1em;
+	}
+	.prose :global(details[open] > summary) {
+		margin-bottom: 0.7em;
+	}
+
+	/* Columns stack on phones */
+	.prose :global(.columns) {
+		display: grid;
+		gap: 0 1.75rem;
+		margin: 0 0 1.4em;
+	}
+	@media (min-width: 640px) {
+		.prose :global(.columns) {
+			grid-auto-flow: column;
+			grid-auto-columns: minmax(0, 1fr);
+		}
+	}
+	.prose :global(.column > :last-child) {
+		margin-bottom: 0;
+	}
+
+	/* Video and audio */
+	.prose :global(.embed) {
+		aspect-ratio: 16 / 9;
+		margin: 2.2em 0;
+	}
+	.prose :global(.embed iframe),
+	.prose :global(figure video) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+		border-radius: 0.75rem;
+		background: theme(colors.ink);
+	}
+	.prose :global(figure audio) {
+		width: 100%;
+	}
+
+	/* Notion's text and background colors, tuned for the cream page */
+	.prose :global(.notion-gray) {
+		color: #7d756c;
+	}
+	.prose :global(.notion-brown) {
+		color: #93603f;
+	}
+	.prose :global(.notion-orange) {
+		color: #c4610b;
+	}
+	.prose :global(.notion-yellow) {
+		color: #a87a12;
+	}
+	.prose :global(.notion-green) {
+		color: #3f7a5a;
+	}
+	.prose :global(.notion-blue) {
+		color: #2e6f98;
+	}
+	.prose :global(.notion-purple) {
+		color: #7f55a3;
+	}
+	.prose :global(.notion-pink) {
+		color: #b13f7c;
+	}
+	.prose :global(.notion-red) {
+		color: #c63a35;
+	}
+	.prose :global(.notion-gray_background) {
+		background: rgba(125, 117, 108, 0.14);
+	}
+	.prose :global(.notion-brown_background) {
+		background: rgba(147, 96, 63, 0.14);
+	}
+	.prose :global(.notion-orange_background) {
+		background: rgba(217, 115, 13, 0.16);
+	}
+	.prose :global(.notion-yellow_background) {
+		background: rgba(230, 180, 40, 0.26);
+	}
+	.prose :global(.notion-green_background) {
+		background: rgba(68, 131, 97, 0.15);
+	}
+	.prose :global(.notion-blue_background) {
+		background: rgba(51, 126, 169, 0.14);
+	}
+	.prose :global(.notion-purple_background) {
+		background: rgba(144, 101, 176, 0.14);
+	}
+	.prose :global(.notion-pink_background) {
+		background: rgba(193, 76, 138, 0.14);
+	}
+	.prose :global(.notion-red_background) {
+		background: rgba(212, 76, 71, 0.14);
+	}
 
 	/* ---------- FOOT ---------- */
 	.post-foot {
@@ -292,6 +494,13 @@
 		margin-top: clamp(2.5rem, 6vw, 4rem);
 		padding-top: 2rem;
 		border-top: 1px solid theme(colors.sandDeep);
+	}
+	.foot-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.25rem 2rem;
 	}
 	.permalink {
 		display: flex;

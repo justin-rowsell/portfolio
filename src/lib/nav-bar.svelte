@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import favicon from '$lib/assets/favicon.png';
+  import logo from '$lib/assets/logo.png';
   import NavLink from './nav-link.svelte';
 
   export let hoverColor = 'text-main';
@@ -11,7 +11,7 @@
 
 <nav class="nav" class:photos={onPhotos}>
   <a class="brand" href="/" aria-label="Home">
-    <img class="brand-mark" src={favicon} alt="Aquaberry" />
+    <img class="brand-mark" src={logo} alt="Justin Rowsell" width="40" height="40" />
   </a>
   <div class="nav-links">
     <NavLink link={'/blog'} iconCode={'book'} linkText={'Blog'} {hoverColor} active={path.startsWith('/blog')} />
@@ -45,8 +45,10 @@
     pointer-events: auto;
   }
   .brand-mark {
-    height: 34px;
-    width: auto;
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
   }
   .nav-links {
     display: flex;

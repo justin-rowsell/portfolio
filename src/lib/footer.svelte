@@ -1,5 +1,5 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.png';
+	import aquaberry from '$lib/assets/aquaberry.png';
 	export let footerTitle: string;
 </script>
 
@@ -8,7 +8,7 @@
 >
 	<div class="flex w-full">
 		<a href="https://aquaberry.io">
-			<img class="mr-3 h-12" src={favicon} alt="Aquaberry Icon" />
+			<img class="mr-3 h-12" src={aquaberry} alt="Aquaberry Icon" />
 		</a>
 		<p class="text-darkAccent text-md">
 			This is an Aquaberry Jam<br />Building software for tomorrow
