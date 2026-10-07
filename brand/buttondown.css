@@ -1,0 +1,65 @@
+/* Far Afield email styling. Paste into Buttondown → Settings → Email design → CSS.
+   Mirrors the site palette in tailwind.config.cjs. Email clients won't load
+   Fraunces, so headings fall back to Georgia. */
+
+body {
+	background: #f6efe4;
+	color: #1b1714;
+	font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+	line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+	font-family: Fraunces, Georgia, 'Times New Roman', serif;
+	font-weight: 500;
+	color: #1b1714;
+	letter-spacing: -0.01em;
+}
+
+p,
+li {
+	color: #1b1714;
+}
+
+a {
+	color: #dc0000;
+	text-underline-offset: 3px;
+}
+
+blockquote {
+	border-left: 3px solid #dccdb4;
+	color: #5a4f45;
+	margin-left: 0;
+	padding-left: 1rem;
+	font-style: italic;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 6px;
+}
+
+figure {
+	margin: 1.5rem 0;
+	text-align: center;
+}
+
+figcaption {
+	font-size: 0.85em;
+	color: #8c7e6e;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid #dccdb4;
+	margin: 2rem 0;
+}
+
+code {
+	background: #ebe0ce;
+	border-radius: 4px;
+	padding: 0.1em 0.3em;
+}
