@@ -34,6 +34,13 @@ Resize phone photos to about 1600px on the long edge before adding them (on a Ma
 - New posts go out by email automatically: Buttondown watches `https://justinrowsell.dev/rss.xml`.
 - Leave old posts up. Revise with `updated:` rather than deleting.
 
+### Cross-posting
+
+After a post is live, `npm run crosspost` (newest post) or `npm run crosspost <slug>` opens a page with copy buttons for Substack and Indie Hackers. Links and images point back at the site, and the copy ends with an "Originally published on Far Afield" link.
+
+- **Substack:** paste the title and subtitle into their fields, then use "Copy body for Substack" and paste into the editor. Turn off "Send via email" when publishing, since Buttondown already emails subscribers.
+- **Indie Hackers:** use "Copy markdown for Indie Hackers".
+
 ## SvelteKit
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
