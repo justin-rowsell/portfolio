@@ -20,14 +20,19 @@ function plainText(markdown: string): string {
 		.replace(/!\[[^\]]*]\([^)]*\)/g, ' ')
 		.replace(/\[([^\]]*)]\([^)]*\)/g, '$1')
 		.replace(/^#+\s.*$/gm, ' ')
+		.replace(/<[^>]+>/g, '')
 		.replace(/[*_`>#~]/g, '')
 		.replace(/\s+/g, ' ')
 		.trim();
 }
 
+// Callouts, toggles, and embeds (see scripts/notion) aren't the opening paragraph.
+const HTML_BLOCK = /^\s*<\/?(aside|details|summary|div|figure|iframe)\b/;
+
 function excerpt(markdown: string, max = 180): string {
 	const firstParagraph = markdown
 		.split(/\n\s*\n/)
+		.filter((chunk) => !HTML_BLOCK.test(chunk))
 		.map(plainText)
 		.find(Boolean);
 	if (!firstParagraph) return '';
@@ -55,6 +60,11 @@ function load(path: string, source: string): Post {
 		fail(file, '`updated` must be YYYY-MM-DD');
 	}
 
+	const image = data.image;
+	if (image !== undefined && (typeof image !== 'string' || !image.startsWith('/'))) {
+		fail(file, '`image` must be a path like /images/my-post/cover.jpg');
+	}
+
 	const rawTags = data.tags ?? [];
 	const tags: Tag[] = (Array.isArray(rawTags) ? rawTags : [String(rawTags)]).map((name) => ({
 		name,
@@ -69,8 +79,10 @@ function load(path: string, source: string): Post {
 		date,
 		updated: updated as string | undefined,
 		summary: typeof data.summary === 'string' ? data.summary : excerpt(body),
+		image: image as string | undefined,
 		tags,
 		draft: data.draft === true,
+		brainmade: data.brainmade !== false,
 		readingMinutes: Math.max(1, Math.round(words / 220)),
 		html: renderMarkdown(body)
 	};

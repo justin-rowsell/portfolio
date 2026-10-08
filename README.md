@@ -28,6 +28,38 @@ Put images in `static/images/<post-slug>/` and reference them from the root. An 
 
 Resize phone photos to about 1600px on the long edge before adding them (on a Mac: `sips -Z 1600 photo.jpg`).
 
+### Brainmade mark
+
+Every post shows the [Brainmade](https://brainmade.org) mark at the bottom, next to the permalink, to say a person wrote it. It's public domain and works on the honor system: their bar is roughly 90% human-made. Add `brainmade: false` to a post's frontmatter to hide it there.
+
+### Banner and link previews
+
+Add `image:` to show a full-width photo above the post. The same photo becomes the link preview in iMessage, Slack, Notion bookmarks and so on, along with the title and `summary`. Leave out `image:` to use the blog banner instead, and set `summary: ""` to send no description.
+
+```md
+image: /images/my-post/fuego-after-dark.jpg
+```
+
+### From Notion
+
+Write the post in Notion, then import it:
+
+```bash
+npm run notion -- https://www.notion.so/... --title "Optional title override"
+```
+
+This writes `src/posts/<slug>.md` as a draft and copies every image into `static/images/<slug>/`, resizing photos the same way as above. Notion's own image links expire after an hour, so they can't be linked directly. The page's cover photo becomes the banner unless the post already has an `image:` you picked. Run the command again after editing in Notion to update the post: the body and banner are refreshed, the rest of the frontmatter is left as you edited it, and a published post gets an `updated:` date.
+
+Formatting carries over: headings, bold/italic/strikethrough/underline, text colors and highlights, links, lists, checklists, quotes, callouts, toggles, code, tables, columns, dividers, images with captions, and YouTube/Vimeo/Loom videos. Sub-pages and equations don't carry over; the command lists anything it skipped.
+
+From a database, it also reads these columns if they exist: **Tags** or **Topic**, **Summary**, **Date** or **Publish Date**, and **Slug**.
+
+One-time setup:
+
+1. Create an internal integration at [notion.so/my-integrations](https://www.notion.so/my-integrations) (read content is enough) and copy its token.
+2. Add it to a `.env` file in the project root (it's gitignored): `NOTION_TOKEN=ntn_...`
+3. In Notion, open the page or database your posts live in, choose **••• → Connections**, and add the integration. Pages inside it are covered too.
+
 ### Notes
 
 - Tags are free-form; each gets a page at `/blog/tags/<tag>` listing every post on it, oldest first.

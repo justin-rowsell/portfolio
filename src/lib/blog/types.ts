@@ -12,8 +12,12 @@ export interface PostMeta {
 	/** YYYY-MM-DD, set when a post is revised after publishing */
 	updated?: string;
 	summary: string;
+	/** Banner photo for the post page and link previews, e.g. /images/my-post/cover.jpg */
+	image?: string;
 	tags: Tag[];
 	draft: boolean;
+	/** Show the Brainmade "made by a human" mark. On unless the post sets `brainmade: false`. */
+	brainmade: boolean;
 	readingMinutes: number;
 }
 
