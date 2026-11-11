@@ -22,6 +22,19 @@ renderer.paragraph = (text) => {
 	return `<figure>${img}>${caption ? `<figcaption>${caption}</figcaption>` : ''}</figure>\n`;
 };
 
+// The post title is the page's only <h1>, so a body that starts its outline at `#` (Notion's
+// "Heading 1") is shifted down a level: # → <h2>, ## → <h3>, and so on.
 export function renderMarkdown(markdown: string): string {
-	return marked.parse(markdown, { renderer });
+	const options = { ...marked.defaults, renderer };
+	const tokens = marked.lexer(markdown, options);
+	let top = 6;
+	marked.walkTokens(tokens, (token) => {
+		if (token.type === 'heading') top = Math.min(top, token.depth);
+	});
+	if (top === 1) {
+		marked.walkTokens(tokens, (token) => {
+			if (token.type === 'heading') token.depth = Math.min(6, token.depth + 1);
+		});
+	}
+	return marked.parser(tokens, options);
 }
