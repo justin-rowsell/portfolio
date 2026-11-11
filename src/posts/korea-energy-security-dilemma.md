@@ -2,8 +2,9 @@
 title: "South Korea's Energy Security Dilemma"
 date: 2026-11-10
 tags: [Energy, Geopolitics]
-summary: ""
+summary: "South Korea imports most of its energy through chokepoints like the Strait of Hormuz. What that risk looks like, and what the 11th Basic Plan does about it."
 image: /images/korea-energy-security-dilemma/seoul-street-night.jpg
+imageAlt: "A neon-lit side street in Seoul at night, lined with karaoke and bar signs"
 notion: 41445625235d80f6a2f8edc9325ee305
 ---
 
