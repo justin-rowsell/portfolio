@@ -65,6 +65,9 @@ function load(path: string, source: string): Post {
 		fail(file, '`image` must be a path like /images/my-post/cover.jpg');
 	}
 
+	const imageAlt = data.imageAlt;
+	if (imageAlt !== undefined && typeof imageAlt !== 'string') fail(file, '`imageAlt` must be text');
+
 	const rawTags = data.tags ?? [];
 	const tags: Tag[] = (Array.isArray(rawTags) ? rawTags : [String(rawTags)]).map((name) => ({
 		name,
@@ -80,6 +83,7 @@ function load(path: string, source: string): Post {
 		updated: updated as string | undefined,
 		summary: typeof data.summary === 'string' ? data.summary : excerpt(body),
 		image: image as string | undefined,
+		imageAlt: (imageAlt as string | undefined) || undefined,
 		tags,
 		draft: data.draft === true,
 		brainmade: data.brainmade !== false,

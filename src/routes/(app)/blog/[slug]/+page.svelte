@@ -2,6 +2,7 @@
 	import Contour from '$lib/blog/contour.svelte';
 	import Brainmade from '$lib/blog/brainmade.svelte';
 	import Seo from '$lib/seo.svelte';
+	import { blogPosting } from '$lib/schema';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
 	import { BLOG_IMAGE, BLOG_NAME, SITE_URL } from '$lib/blog/config';
@@ -16,6 +17,7 @@
 
 <Seo
 	image={post.image ?? BLOG_IMAGE}
+	imageAlt={post.image ? post.imageAlt : undefined}
 	title="{post.title} — Justin Rowsell"
 	description={post.summary}
 	path="/blog/{post.slug}"
@@ -23,12 +25,13 @@
 	published={post.date}
 	modified={post.updated}
 	tags={post.tags.map((t) => t.name)}
+	schema={blogPosting(post)}
 />
 
 <article>
 	{#if post.image}
 		<div class="banner">
-			<img src={post.image} alt="" />
+			<img src={post.image} alt={post.imageAlt ?? ''} />
 		</div>
 	{/if}
 
