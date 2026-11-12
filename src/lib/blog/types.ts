@@ -14,6 +14,8 @@ export interface PostMeta {
 	summary: string;
 	/** Banner photo for the post page and link previews, e.g. /images/my-post/cover.jpg */
 	image?: string;
+	/** Describes the banner photo for screen readers and image search */
+	imageAlt?: string;
 	tags: Tag[];
 	draft: boolean;
 	/** Show the Brainmade "made by a human" mark. On unless the post sets `brainmade: false`. */

@@ -43,3 +43,32 @@ test('home page newsletter button leads to the Far Afield signup', async ({ page
 	await expect(form).toHaveAttribute('action', /buttondown\.com\/api\/emails\/embed-subscribe\//);
 	await expect(form.getByLabel('Email address')).toHaveAttribute('type', 'email');
 });
+
+test('blog posts have one h1, a description, and BlogPosting structured data', async ({ page }) => {
+	await page.goto('/blog');
+	const slugs = await page
+		.locator('a.entry-link')
+		.evaluateAll((links) => links.map((a) => a.getAttribute('href')));
+	expect(slugs.length).toBeGreaterThan(0);
+
+	for (const slug of slugs) {
+		await page.goto(slug as string);
+		await expect(page.locator('h1')).toHaveCount(1);
+		await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /\S/);
+
+		const jsonLd = JSON.parse(
+			(await page.locator('script[type="application/ld+json"]').textContent()) as string
+		);
+		expect(jsonLd['@type']).toBe('BlogPosting');
+		expect(jsonLd.headline).toBe(await page.locator('h1').textContent());
+	}
+});
+
+test('home page describes Justin with structured data', async ({ page }) => {
+	await page.goto('/');
+	const jsonLd = JSON.parse(
+		(await page.locator('script[type="application/ld+json"]').textContent()) as string
+	);
+	const types = jsonLd['@graph'].map((node: { '@type': string }) => node['@type']);
+	expect(types).toEqual(['WebSite', 'Person']);
+});

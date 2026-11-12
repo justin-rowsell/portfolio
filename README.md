@@ -10,7 +10,7 @@ Add a markdown file to `src/posts/`. The filename becomes the permanent link, so
 title: Why I killed this idea
 date: 2026-09-24
 tags: [building solo, climate]
-summary: Optional. Defaults to the first paragraph.
+summary: Optional, but write one. Search results and link previews show it. Defaults to the first paragraph.
 updated: 2026-10-02   # optional, shows a "revised" note
 draft: true           # optional, only visible in `npm run dev`
 ---
@@ -38,7 +38,12 @@ Add `image:` to show a full-width photo above the post. The same photo becomes t
 
 ```md
 image: /images/my-post/fuego-after-dark.jpg
+imageAlt: "Volcán de Fuego erupting after dark"   # optional, describes the banner
 ```
+
+### Search
+
+Each post gets its `title`, `summary` (the search snippet, so write one rather than leaning on the first-paragraph default), and schema.org structured data for search engines. The post title is the page's only top-level heading, so a body that uses `#` headings (as Notion's Heading 1 does) is shifted down a level when it renders.
 
 ### From Notion
 

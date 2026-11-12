@@ -2,8 +2,9 @@
 title: "My Personal Manifesto"
 date: 2026-10-04
 tags: [Thoughts]
-summary: ""
+summary: "Why, at 31, after a decade as a software engineer and a stint as a digital nomad now living in Seoul, I'm looking for the one thing to get really good at."
 image: /images/my-personal-manifesto/fuego-after-dark.jpg
+imageAlt: "Volcán de Fuego erupting after dark, lava spraying from its summit"
 notion: 3e545625235d80039bc7cde3605630b0
 ---
 

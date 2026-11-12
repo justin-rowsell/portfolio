@@ -28,4 +28,18 @@ describe('renderMarkdown', () => {
 			'<p>Look <img loading="lazy" decoding="async" src="/i.png" alt="icon"> here</p>\n'
 		);
 	});
+
+	it('shifts a body that uses # headings down a level, so the post title stays the only h1', () => {
+		const html = renderMarkdown('# Why care\n\ntext\n\n## Detail\n\n###### Deepest');
+		expect(html).not.toContain('<h1');
+		expect(html).toContain('<h2 id="why-care">Why care</h2>');
+		expect(html).toContain('<h3 id="detail">Detail</h3>');
+		expect(html).toContain('<h6 id="deepest">Deepest</h6>');
+	});
+
+	it('leaves a body that starts at ## alone', () => {
+		expect(renderMarkdown('## Section\n\n### Sub')).toBe(
+			'<h2 id="section">Section</h2>\n<h3 id="sub">Sub</h3>\n'
+		);
+	});
 });

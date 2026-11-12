@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Seo from '$lib/seo.svelte';
+	import { blog } from '$lib/schema';
 	import Subscribe from '$lib/blog/subscribe.svelte';
 	import TagList from '$lib/blog/tag-list.svelte';
 	import { BLOG_DESCRIPTION, BLOG_IMAGE, BLOG_NAME, BLOG_TITLE } from '$lib/blog/config';
@@ -17,7 +18,13 @@
 	}, []);
 </script>
 
-<Seo title={BLOG_TITLE} description={BLOG_DESCRIPTION} path="/blog" image={BLOG_IMAGE} />
+<Seo
+	title={BLOG_TITLE}
+	description={BLOG_DESCRIPTION}
+	path="/blog"
+	image={BLOG_IMAGE}
+	schema={blog}
+/>
 
 <header class="banner">
 	<h1 class="banner-title">
